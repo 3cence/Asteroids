@@ -18,6 +18,11 @@ class Window(QMainWindow):
     def tick(self):
         self.canvas.tick()
 
+    def keyPressEvent(self, event: QKeyEvent):
+        self.canvas.keyEventDist(event, True)
+
+    def keyReleaseEvent(self, event: QKeyEvent):
+        self.canvas.keyEventDist(event, False)
 
 
 app = QApplication(sys.argv)

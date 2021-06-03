@@ -53,6 +53,15 @@ class Canvas(QWidget):
             self.prvTime = time.time()
 
         if time.time() - self.prvSecondTime >= 1:
-            print(self.secTps)
+            # print(self.secTps)
             self.secTps = 0
             self.prvSecondTime = time.time()
+
+    def getEarth(self):
+        return self.earth
+
+    def keyEventDist(self, event: QKeyEvent, isPressed: bool):
+        if isPressed:
+            self.player.keyDown(event)
+        else:
+            self.player.keyUp(event)
