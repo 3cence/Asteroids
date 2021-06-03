@@ -1,7 +1,8 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from File.resloader import resource_path
+from Utils.resloader import resource_path
+from Game.Player import Player
 import time
 
 
@@ -13,6 +14,9 @@ class Canvas(QWidget):
 
         #Asset Loading
         self.background = QPixmap(resource_path("Assets/bg.png"))
+
+        #Game Items
+        self.player = Player()
 
         #Tick Regulation Stuff
         self.timer = QTime()
@@ -27,9 +31,10 @@ class Canvas(QWidget):
     def paintEvent(self, event):
         pnt = QPainter(self)
         pnt.drawPixmap(QRect(0, 0, self.geometry().width(), self.geometry().height()), self.background)
+        self.player.render(pnt)
 
     def tick(self):
-
+        self.player.tick()
         self.repaint()
         #Tick Regulation
         self.Tps += 1.00

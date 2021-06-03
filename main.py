@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from Canvas import Canvas
-from File.resloader import resource_path
+from Utils.resloader import resource_path
 import sys
 
 
