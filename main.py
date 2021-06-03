@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from Canvas import Canvas
+from GameCore import GameCore
 from Utils.resloader import resource_path
 import sys
 
@@ -13,7 +13,7 @@ class Window(QMainWindow):
         self.setWindowTitle("Asteroids")
         self.setWindowIcon(QIcon(resource_path("Assets/roid.png")))
 
-        self.canvas = Canvas(self)
+        self.canvas = GameCore(self)
 
     def tick(self):
         self.canvas.tick()

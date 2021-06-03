@@ -7,7 +7,7 @@ from Game.Earth import Earth
 import time
 
 
-class Canvas(QWidget):
+class GameCore(QWidget):
     def __init__(self, mainWindow):
         super().__init__(mainWindow)
         self.mainWindow = mainWindow
@@ -38,7 +38,7 @@ class Canvas(QWidget):
         self.earth.render(pnt)
 
     def tick(self):
-        self.player.tick()
+        self.player.tick(self)
         self.repaint()
 
         #Tick Regulation
@@ -53,7 +53,7 @@ class Canvas(QWidget):
             self.prvTime = time.time()
 
         if time.time() - self.prvSecondTime >= 1:
-            # print(self.secTps)
+            print(self.secTps)
             self.secTps = 0
             self.prvSecondTime = time.time()
 

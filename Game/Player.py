@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+
+import GameCore
 from Utils.resloader import resource_path
 
 
@@ -16,7 +18,8 @@ class Player(QRect):
     def render(self, pnt: QPainter):
         pnt.drawPixmap(self, self.texture)
 
-    def tick(self):
+    def tick(self, env):
+        surface = env.getEarth().getSurface()
         if self.move[0]:
             self.pos[0] -= self.speed
         elif self.move[1]:
@@ -26,10 +29,13 @@ class Player(QRect):
         elif self.move[3]:
             self.pos[1] += self.speed
 
-        self.setX(self.pos[0])
-        self.setY(self.pos[1])
-        self.setWidth(23)
-        self.setHeight(50)
+        if not surface.intersects(QRectF(self.pos[0], self.pos[1], self.width(), self.height())):
+            self.setX(self.pos[0])
+            self.setY(self.pos[1])
+            self.setWidth(23)
+            self.setHeight(50)
+        else:
+            self.pos = [self.x(), self.y()]
 
     def keyDown(self, event: QKeyEvent):
         event = event.key()
@@ -54,3 +60,6 @@ class Player(QRect):
             self.move[2] = False
         elif event == 16777237:
             self.move[3] = False
+
+    def getRectF(self):
+        return QRectF(self.x(), self.y(), self.width(), self.height())
