@@ -34,8 +34,8 @@ class GameCore(QWidget):
     def paintEvent(self, event):
         pnt = QPainter(self)
         pnt.drawPixmap(QRect(0, 0, self.geometry().width(), self.geometry().height()), self.background)
-        self.player.render(pnt)
         self.earth.render(pnt)
+        self.player.render(pnt)
 
     def tick(self):
         self.player.tick(self)

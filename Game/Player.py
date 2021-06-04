@@ -31,12 +31,13 @@ class Player(QRect):
 
         while surface.intersects(QRectF(self.pos[0], self.pos[1], self.width(), self.height())):
             self.pos[1] -= 1
-        self.pos[1] += 1;
+        self.pos[1] += 1
 
-        self.setX(self.pos[0])
-        self.setY(self.pos[1])
-        self.setWidth(23)
-        self.setHeight(50)
+        if not self.pos[0] < 0 and not self.pos[0] > 937:
+            self.setX(self.pos[0])
+            self.setY(self.pos[1])
+            self.setWidth(23)
+            self.setHeight(50)
 
     def keyDown(self, event: QKeyEvent):
         event = event.key()

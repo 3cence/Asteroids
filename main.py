@@ -9,7 +9,7 @@ import sys
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setFixedSize(800, 500)
+        self.setFixedSize(960, 600)
         self.setWindowTitle("Asteroids")
         self.setWindowIcon(QIcon(resource_path("Assets/roid.png")))
 
