@@ -11,7 +11,7 @@ class Player(QRect):
         super().__init__(100, 100, 23, 50)
         self.move = [False, False, False, False]
         self.pos = [100, 100]
-        self.speed = 5
+        self.speed = 4
         #Load Assets
         self.texture = QPixmap(resource_path("Assets/player/player1.png"))
 
@@ -20,22 +20,23 @@ class Player(QRect):
 
     def tick(self, env):
         surface = env.getEarth().getSurface()
+        self.pos = [self.x(), self.y()]
+
+        self.pos[1] += self.speed
+
         if self.move[0]:
             self.pos[0] -= self.speed
-        elif self.move[1]:
-            self.pos[1] -= self.speed
         elif self.move[2]:
             self.pos[0] += self.speed
-        elif self.move[3]:
-            self.pos[1] += self.speed
 
-        if not surface.intersects(QRectF(self.pos[0], self.pos[1], self.width(), self.height())):
-            self.setX(self.pos[0])
-            self.setY(self.pos[1])
-            self.setWidth(23)
-            self.setHeight(50)
-        else:
-            self.pos = [self.x(), self.y()]
+        while surface.intersects(QRectF(self.pos[0], self.pos[1], self.width(), self.height())):
+            self.pos[1] -= 1
+        self.pos[1] += 1;
+
+        self.setX(self.pos[0])
+        self.setY(self.pos[1])
+        self.setWidth(23)
+        self.setHeight(50)
 
     def keyDown(self, event: QKeyEvent):
         event = event.key()
