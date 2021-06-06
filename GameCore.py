@@ -15,11 +15,11 @@ class GameCore(QWidget):
         self.mainWindow = mainWindow
         self.setGeometry(mainWindow.geometry())
         self.setEnabled(False)
+        self.hide()
 
         #Asset Loading
         self.background = QPixmap(resource_path("Assets/bg.png"))
-
-        # print(Animations.startAnimation(self.testAnimation))
+        self.testAnimation = Animations.Animation("Assets/spritesheets/test_anim.gif", 100, 100, 4, 3, 10, 10)
 
         #Game Items
         self.player = Player()
@@ -27,6 +27,13 @@ class GameCore(QWidget):
         self.asteroids = Asteroids(self)
 
         #Tick Regulation Stuff
+        self.ticker = QTimer(self)
+        self.ticker.setInterval(0)
+        self.ticker.timeout.connect(self.tick)
+        self.ticker.start()
+
+        self.gameRunning = False
+
         self.timer = QTime()
         self.timer.start()
         self.prvTime = 0
@@ -35,6 +42,11 @@ class GameCore(QWidget):
         self.secTps = 0
         self.targetTps = 50
         self.delay = 1.000000
+
+    def startGame(self):
+        self.show()
+        self.gameRunning = True
+
 
     def paintEvent(self, event):
         pnt = QPainter(self)
@@ -45,11 +57,14 @@ class GameCore(QWidget):
         self.asteroids.render(pnt)
 
     def tick(self):
-        self.player.tick(self)
-        self.asteroids.tick(self)
-        # Animations.tickAnimation()
 
-        self.repaint()
+        #Put all game-related ticking in this If
+        if self.gameRunning:
+            self.player.tick(self)
+            self.asteroids.tick(self)
+            # Animations.tickAnimation()
+
+            self.repaint()
 
         #Tick Regulation
         self.Tps += 1.00

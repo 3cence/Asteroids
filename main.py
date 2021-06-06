@@ -13,25 +13,23 @@ class Window(QMainWindow):
         self.setWindowTitle("Asteroids")
         self.setWindowIcon(QIcon(resource_path("Assets/roid.png")))
 
-        self.canvas = GameCore(self)
+        self.gameCore = GameCore(self)
+        self.startTimer = QTimer(self)
+        self.startTimer.setInterval(1000)
+        self.startTimer.timeout.connect(self.startGame)
+        self.startTimer.start()
 
-    def tick(self):
-        self.canvas.tick()
+    def startGame(self):
+        self.gameCore.startGame()
 
     def keyPressEvent(self, event: QKeyEvent):
-        self.canvas.keyEventDist(event, True)
+        self.gameCore.keyEventDist(event, True)
 
     def keyReleaseEvent(self, event: QKeyEvent):
-        self.canvas.keyEventDist(event, False)
+        self.gameCore.keyEventDist(event, False)
 
 
 app = QApplication(sys.argv)
 win = Window()
-
-ticker = QTimer(win)
-ticker.setInterval(0)
-ticker.timeout.connect(win.tick)
-ticker.start()
-
 win.show()
 app.exec()
