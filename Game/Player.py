@@ -8,7 +8,7 @@ from Utils.resloader import resource_path
 
 class Player(QRect):
     def __init__(self):
-        super().__init__(100, 100, 23, 50)
+        super().__init__(128, 452, 23, 50)
         self.move = [False, False, False, False]
         self.pos = [100, 100]
         self.speed = 4
@@ -33,7 +33,7 @@ class Player(QRect):
             self.pos[1] -= 1
         self.pos[1] += 1
 
-        if not self.pos[0] < 0 and not self.pos[0] > 937:
+        if not self.pos[0] < 0 and not self.pos[0] > 938:
             self.setX(self.pos[0])
             self.setY(self.pos[1])
             self.setWidth(23)

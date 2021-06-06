@@ -29,7 +29,7 @@ class GameCore(QWidget):
         self.Tps = 0.00
         self.secTps = 0
         self.targetTps = 50
-        self.delay = 1
+        self.delay = 1.000000
 
     def paintEvent(self, event):
         pnt = QPainter(self)
