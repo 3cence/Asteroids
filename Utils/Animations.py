@@ -37,7 +37,7 @@ def stopAnimation(id: int):
 
 
 def tickAnimation():
-    print(activeAnimations)
+    i = 5
 
 
 def renderAnimation(pnt: QPainter):

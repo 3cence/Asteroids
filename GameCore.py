@@ -5,6 +5,7 @@ from Utils.Resloader import resource_path
 from Game.Player import Player
 from Game.Earth import Earth
 from Utils import Animations
+from Game.Asteroids import Asteroids
 import time
 
 
@@ -17,13 +18,13 @@ class GameCore(QWidget):
 
         #Asset Loading
         self.background = QPixmap(resource_path("Assets/bg.png"))
-        self.testAnimation = Animations.Animation("Assets/spritesheets/test_anim.gif", 100, 100, 4, 3, 10, 10)
 
-        print(Animations.startAnimation(self.testAnimation))
+        # print(Animations.startAnimation(self.testAnimation))
 
         #Game Items
         self.player = Player()
         self.earth = Earth()
+        self.asteroids = Asteroids(self)
 
         #Tick Regulation Stuff
         self.timer = QTime()
@@ -38,13 +39,16 @@ class GameCore(QWidget):
     def paintEvent(self, event):
         pnt = QPainter(self)
         pnt.drawPixmap(QRect(0, 0, self.geometry().width(), self.geometry().height()), self.background)
-        Animations.renderAnimation(pnt)
+        # Animations.renderAnimation(pnt)
         self.earth.render(pnt)
         self.player.render(pnt)
+        self.asteroids.render(pnt)
 
     def tick(self):
         self.player.tick(self)
-        Animations.tickAnimation()
+        self.asteroids.tick(self)
+        # Animations.tickAnimation()
+
         self.repaint()
 
         #Tick Regulation
