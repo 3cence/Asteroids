@@ -1,9 +1,10 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from Utils.resloader import resource_path
+from Utils.Resloader import resource_path
 from Game.Player import Player
 from Game.Earth import Earth
+from Utils import Animations
 import time
 
 
@@ -39,6 +40,7 @@ class GameCore(QWidget):
 
     def tick(self):
         self.player.tick(self)
+
         self.repaint()
 
         #Tick Regulation
