@@ -17,6 +17,9 @@ class GameCore(QWidget):
 
         #Asset Loading
         self.background = QPixmap(resource_path("Assets/bg.png"))
+        self.testAnimation = Animations.Animation("Assets/spritesheets/test_anim.gif", 100, 100, 4, 3, 10, 10)
+
+        print(Animations.startAnimation(self.testAnimation))
 
         #Game Items
         self.player = Player()
@@ -35,12 +38,13 @@ class GameCore(QWidget):
     def paintEvent(self, event):
         pnt = QPainter(self)
         pnt.drawPixmap(QRect(0, 0, self.geometry().width(), self.geometry().height()), self.background)
+        Animations.renderAnimation(pnt)
         self.earth.render(pnt)
         self.player.render(pnt)
 
     def tick(self):
         self.player.tick(self)
-
+        Animations.tickAnimation()
         self.repaint()
 
         #Tick Regulation
@@ -55,7 +59,7 @@ class GameCore(QWidget):
             self.prvTime = time.time()
 
         if time.time() - self.prvSecondTime >= 1:
-            print(self.secTps)
+            self.mainWindow.setWindowTitle(f"Asteroids: {self.secTps} Tps")
             self.secTps = 0
             self.prvSecondTime = time.time()
 
