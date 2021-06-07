@@ -1,5 +1,6 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+import time
 
 from Utils.Resloader import resource_path
 
@@ -10,15 +11,35 @@ class Player(QRect):
         self.move = [False, False, False, False]
         self.pos = [100, 100]
         self.speed = 4
+        self.health = 3
+
+        #iFrames in seconds
+        self.lastInvincible = 0
+        self.iFrames = 1
+        self.onIFrames = False
+        self.ticksSinceHit = 0
 
         #Load Assets
-        self.texture = QPixmap(resource_path("Assets/player/player1.png"))
+        self.activeTexture = 0
+        self.texture = [QPixmap(resource_path("Assets/player/player1.png")),
+                        QPixmap(resource_path("Assets/player/player2.png")),
+                        QPixmap(resource_path("Assets/player/player3.png"))]
+        self.heart = QPixmap(resource_path("Assets/player/heart.png"))
 
     def render(self, pnt: QPainter):
-        pnt.drawPixmap(self, self.texture)
+        if self.ticksSinceHit % 2 == 0:
+            pnt.drawPixmap(self, self.texture[self.activeTexture])
+
+        for i in range(self.health):
+            pnt.drawPixmap(QRect(self.heart.width() * i + 4 * i, 0,
+                                 self.heart.width(), self.heart.height()), self.heart)
 
     def tick(self, env):
         surface = env.getEarth().getSurface()
+        if time.time() - self.lastInvincible >= self.iFrames:
+            self.onIFrames = False
+        else:
+            self.onIFrames = True
         self.pos = [self.x(), self.y()]
 
         # Move the player
@@ -40,6 +61,25 @@ class Player(QRect):
             self.setY(self.pos[1])
             self.setWidth(23)
             self.setHeight(50)
+
+        #Do i get hit by an asteroid? (And invince frames)
+        print(self.health)
+        if not self.onIFrames:
+            self.ticksSinceHit = 0
+            for asteroid, speed in env.asteroids.asteroids:
+                if self.intersects(asteroid):
+                    if self.activeTexture < 2:
+                        self.activeTexture += 1
+                    self.health -= 1
+                    self.ticksSinceHit = 0
+                    self.lastInvincible = time.time()
+        else:
+            self.ticksSinceHit += 1
+
+        #DID YOU DIE BOX
+        if self.health == 0:
+            env.endGame()
+
 
     def keyDown(self, event: QKeyEvent):
         event = event.key()

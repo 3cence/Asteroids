@@ -44,6 +44,10 @@ class GameCore(QWidget):
         self.show()
         self.gameRunning = True
 
+    def endGame(self):
+        self.hide()
+        self.gameRunning = False
+
 
     def paintEvent(self, event):
         pnt = QPainter(self)

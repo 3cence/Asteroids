@@ -14,7 +14,7 @@ class Window(QMainWindow):
         self.setWindowIcon(QIcon(resource_path("Assets/roid.png")))
 
         # Somehow, all this is for the loading text
-        self.loadingText = QLabel("<font color=\"white\"> Loading Game...", self)
+        self.loadingText = QLabel(self)
         self.loadingText.setGeometry(QRect(137, 225, 685, 125))
         loadingFont = QFont()
         loadingFont.setFamily(u"Yrsa")
@@ -24,6 +24,8 @@ class Window(QMainWindow):
         loadingFont.setWeight(75)
         self.loadingText.setFont(loadingFont)
         self.loadingText.setAlignment(Qt.AlignCenter)
+        self.gameCore = None
+        self.startTimer = None
 
         # Start the games engines
         self.gameCore = GameCore(self)
@@ -31,9 +33,19 @@ class Window(QMainWindow):
         self.startTimer.setInterval(2250)
         self.startTimer.timeout.connect(self.startGame)
         self.startTimer.start()
+        self.loadingText.setText("<font color=\"white\"> Loading Game...")
+
+
+    def restartGame(self):
+        self.gameCore.reset()
+        self.loadingText.setText("<font color=\"white\"> Loading Game...")
+        self.startTimer.start()
+
 
     def startGame(self):
         self.gameCore.startGame()
+        self.startTimer.stop()
+        self.loadingText.setText("<font color=\"red\"> Game Over...")
 
     def paintEvent(self, event):
         pnt = QPainter(self)
@@ -44,6 +56,8 @@ class Window(QMainWindow):
         self.gameCore.keyEventDist(event, True)
 
     def keyReleaseEvent(self, event: QKeyEvent):
+        if event.key() == 82:
+            self.restartGame()
         self.gameCore.keyEventDist(event, False)
 
 
