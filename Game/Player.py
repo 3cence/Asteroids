@@ -10,6 +10,7 @@ class Player(QRect):
         self.move = [False, False, False, False]
         self.pos = [100, 100]
         self.speed = 4
+
         #Load Assets
         self.texture = QPixmap(resource_path("Assets/player/player1.png"))
 
@@ -20,6 +21,7 @@ class Player(QRect):
         surface = env.getEarth().getSurface()
         self.pos = [self.x(), self.y()]
 
+        # Move the player
         self.pos[1] += self.speed
 
         if self.move[0]:
@@ -27,10 +29,12 @@ class Player(QRect):
         elif self.move[2]:
             self.pos[0] += self.speed
 
+        # Don't fall through the earth!!
         while surface.intersects(QRectF(self.pos[0], self.pos[1], self.width(), self.height())):
             self.pos[1] -= 1
         self.pos[1] += 1
 
+        # Protect from leaving the screen
         if not self.pos[0] < 0 and not self.pos[0] > 938:
             self.setX(self.pos[0])
             self.setY(self.pos[1])

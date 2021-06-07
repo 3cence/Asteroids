@@ -54,17 +54,21 @@ def killParticle(id: int):
 def tickParticles():
     toRemove = []
     for i, animation in enumerate(activeAnimations):
+        #Advance the particle
         if animation.ticksSinceLastFrame >= 60 / animation.fps:
             animation.activeFrame += 1
             animation.ticksSinceLastFrame = 0
         else:
             animation.ticksSinceLastFrame += 1
 
+        # Kill/Restart the particle
         if animation.activeFrame >= animation.totalFrames:
             if not animation.loops:
                 toRemove.append([animation, i])
             else:
                 animation.activeFrame = 0
+
+    # Actually kill the particles
     for i, candidate in enumerate(toRemove):
         activeAnimations.pop(candidate[1] - i)
 

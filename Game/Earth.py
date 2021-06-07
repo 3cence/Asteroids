@@ -8,8 +8,8 @@ class Earth(QRect):
     def __init__(self):
         super().__init__(0, 500, 960, 100)
         self.surface = QPainterPath()
-
         self.prepareSurface()
+
         #Load Assets
         self.texture = QPixmap(resource_path("Assets/earth.png"))
 
@@ -43,4 +43,3 @@ class Earth(QRect):
         pnt.drawPixmap(self, self.texture)
         pnt.setPen(Qt.cyan)
         pnt.setBrush(Qt.blue)
-        # pnt.drawPath(self.surface)

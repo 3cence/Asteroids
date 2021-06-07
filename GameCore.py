@@ -26,13 +26,11 @@ class GameCore(QWidget):
         self.asteroids = Asteroids(self)
 
         #Tick Regulation Stuff
+        self.gameRunning = False
         self.ticker = QTimer(self)
         self.ticker.setInterval(0)
         self.ticker.timeout.connect(self.tick)
         self.ticker.start()
-
-        self.gameRunning = False
-
         self.timer = QTime()
         self.timer.start()
         self.prvTime = 0
@@ -57,7 +55,7 @@ class GameCore(QWidget):
 
     def tick(self):
 
-        #Put all game-related ticking in this If
+        #Put all game-related ticking in this if
         if self.gameRunning:
             self.player.tick(self)
             self.asteroids.tick(self)

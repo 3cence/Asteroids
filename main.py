@@ -13,6 +13,7 @@ class Window(QMainWindow):
         self.setWindowTitle("Asteroids")
         self.setWindowIcon(QIcon(resource_path("Assets/roid.png")))
 
+        # Somehow, all this is for the loading text
         self.loadingText = QLabel("<font color=\"white\"> Loading Game...", self)
         self.loadingText.setGeometry(QRect(137, 225, 685, 125))
         loadingFont = QFont()
@@ -24,6 +25,7 @@ class Window(QMainWindow):
         self.loadingText.setFont(loadingFont)
         self.loadingText.setAlignment(Qt.AlignCenter)
 
+        # Start the games engines
         self.gameCore = GameCore(self)
         self.startTimer = QTimer(self)
         self.startTimer.setInterval(2250)
