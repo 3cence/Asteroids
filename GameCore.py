@@ -19,9 +19,9 @@ class GameCore(QWidget):
 
         #Asset Loading
         self.background = QPixmap(resource_path("Assets/bg.png"))
-        self.testAnimation = Animations.Animation("Assets/spritesheets/test_anim.png", x=100, y=100, columns=4, rows=3,
+        self.testAnimation = Animations.Animation("Assets/spritesheets/test_anim.png", columns=4, rows=3,
                                                   totalFrames=10, fps=15, scale=4)
-        Animations.startAnimation(self.testAnimation)
+        Animations.startAnimation(self.testAnimation, 100, 100)
 
         #Game Items
         self.player = Player()

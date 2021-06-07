@@ -26,7 +26,7 @@ class Window(QMainWindow):
 
         self.gameCore = GameCore(self)
         self.startTimer = QTimer(self)
-        self.startTimer.setInterval(3000)
+        self.startTimer.setInterval(2250)
         self.startTimer.timeout.connect(self.startGame)
         self.startTimer.start()
 

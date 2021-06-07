@@ -5,10 +5,10 @@ import random
 
 
 class Animation:
-    def __init__(self, path: str, x: int, y: int, columns: int, rows: int, totalFrames: int, fps: int, scale=1.00, loops=False):
+    def __init__(self, path: str, columns: int, rows: int, totalFrames: int, fps: int, scale=1.00, loops=False):
         super().__init__()
         self.full_pixmap = QPixmap((resource_path(path)))
-        self.pos = [x, y]
+        self.pos = [0, 0]
         self.gridSize = [columns, rows]
         self.totalFrames = totalFrames
         self.scale = scale
@@ -35,8 +35,9 @@ class Animation:
 activeAnimations = []
 
 
-def startAnimation(newAnimation: Animation):
+def startAnimation(newAnimation: Animation, x: int, y: int):
     newAnimation.id = random.random()
+    newAnimation.pos = [x, y]
     activeAnimations.append(newAnimation)
     return newAnimation.id
 
