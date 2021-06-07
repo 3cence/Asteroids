@@ -1,17 +1,17 @@
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from Utils.Resloader import resource_path
-import random
+import random, copy
 
 
-class Animation:
-    def __init__(self, path: str, columns: int, rows: int, totalFrames: int, fps: int, scale=1.00, loops=False):
+class Particle:
+    def __init__(self, path: str, columns: int, rows: int, totalFrames: int, fps: int, loops=False):
         super().__init__()
         self.full_pixmap = QPixmap((resource_path(path)))
         self.pos = [0, 0]
         self.gridSize = [columns, rows]
         self.totalFrames = totalFrames
-        self.scale = scale
+        self.scale = 1.00
         self.loops = loops
         self.jumpX = int(self.full_pixmap.width() / self.gridSize[0])
         self.jumpY = int(self.full_pixmap.height() / self.gridSize[1])
@@ -35,21 +35,23 @@ class Animation:
 activeAnimations = []
 
 
-def startAnimation(newAnimation: Animation, x: int, y: int):
-    newAnimation.id = random.random()
-    newAnimation.pos = [x, y]
-    activeAnimations.append(newAnimation)
-    return newAnimation.id
+def spawnParticle(particle: Particle, x: int, y: int, scale=1.00):
+    newParticle = copy.copy(particle)
+    newParticle.id = random.random()
+    newParticle.pos = [x, y]
+    newParticle.scale = scale
+    activeAnimations.append(newParticle)
+    return newParticle.id
 
 
-def stopAnimation(id: int):
+def killParticle(id: int):
     for i, x in enumerate(activeAnimations):
         if x.id == id:
             activeAnimations.pop(i)
             break
 
 
-def tickAnimation():
+def tickParticles():
     toRemove = []
     for i, animation in enumerate(activeAnimations):
         if animation.ticksSinceLastFrame >= 60 / animation.fps:
@@ -60,17 +62,15 @@ def tickAnimation():
 
         if animation.activeFrame >= animation.totalFrames:
             if not animation.loops:
-                toRemove.append(animation)
+                toRemove.append([animation, i])
             else:
                 animation.activeFrame = 0
-    for candidates in toRemove:
-        activeAnimations.remove(candidates)
+    for i, candidate in enumerate(toRemove):
+        activeAnimations.pop(candidate[1] - i)
 
 
-def renderAnimation(pnt: QPainter):
+def renderParticles(pnt: QPainter):
     for animation in activeAnimations:
         pnt.drawPixmap(QRect(animation.pos[0], animation.pos[1], animation.jumpX * animation.scale,
                              animation.jumpY * animation.scale),
                        animation.frames[animation.activeFrame])
-    # pnt.drawPixmap(QRect(0, 0, 64, 64), activeAnimations[0].frames[0])
-    # print(activeAnimations[0].activeFrame)

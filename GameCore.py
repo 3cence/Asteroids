@@ -4,7 +4,7 @@ from PyQt5.QtGui import *
 from Utils.Resloader import resource_path
 from Game.Player import Player
 from Game.Earth import Earth
-from Utils import Animations
+from Utils import Particles
 from Game.Asteroids import Asteroids
 import time
 
@@ -19,9 +19,6 @@ class GameCore(QWidget):
 
         #Asset Loading
         self.background = QPixmap(resource_path("Assets/bg.png"))
-        self.testAnimation = Animations.Animation("Assets/spritesheets/test_anim.png", columns=4, rows=3,
-                                                  totalFrames=10, fps=15, scale=4)
-        Animations.startAnimation(self.testAnimation, 100, 100)
 
         #Game Items
         self.player = Player()
@@ -42,7 +39,7 @@ class GameCore(QWidget):
         self.prvSecondTime = 0
         self.Tps = 0.00
         self.secTps = 0
-        self.targetTps = 50
+        self.targetTps = 60
         self.delay = 1.000000
 
     def startGame(self):
@@ -53,7 +50,7 @@ class GameCore(QWidget):
     def paintEvent(self, event):
         pnt = QPainter(self)
         pnt.drawPixmap(QRect(0, 0, self.geometry().width(), self.geometry().height()), self.background)
-        Animations.renderAnimation(pnt)
+        Particles.renderParticles(pnt)
         self.earth.render(pnt)
         self.player.render(pnt)
         self.asteroids.render(pnt)
@@ -63,8 +60,8 @@ class GameCore(QWidget):
         #Put all game-related ticking in this If
         if self.gameRunning:
             self.player.tick(self)
-            # self.asteroids.tick(self)
-            Animations.tickAnimation()
+            self.asteroids.tick(self)
+            Particles.tickParticles()
 
             self.repaint()
 
