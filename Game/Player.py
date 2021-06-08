@@ -64,7 +64,6 @@ class Player(QRect):
             self.setHeight(50)
 
         #Do i get hit by an asteroid? (And invince frames)
-        print(self.health)
         if not self.onIFrames:
             self.ticksSinceHit = 0
             for asteroid, speed in env.asteroids.asteroids:

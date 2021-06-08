@@ -23,7 +23,6 @@ class Particle:
         self.makeFrames()
 
     def makeFrames(self):
-        print(self.jumpX, self.jumpY)
         framesLoaded = 0
         for y in range(self.gridSize[1]):
             for x in range(self.gridSize[0]):
