@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from PyQt5.QtMultimedia import *
 from Utils.Resloader import resource_path
 from Game.Player import Player
 from Game.Earth import Earth
@@ -37,6 +38,9 @@ class GameCore(QWidget):
         font.setFamily("tlwg typist")
         self.scoreLabel.setFont(font)
         self.scoreLabel.setAlignment(Qt.AlignCenter)
+
+        #Sound Testing Stuff
+        # self.sfxBoom = QSound(resource_path("Assets/sfx/crash.wav"))
 
         # Tick Regulation Stuff
         self.gameRunning = False

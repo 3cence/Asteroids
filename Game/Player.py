@@ -1,5 +1,6 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from PyQt5.QtMultimedia import *
 from Utils import Particles
 import time
 
@@ -71,6 +72,7 @@ class Player(QRect):
                     if self.activeTexture < 2:
                         self.activeTexture += 1
                     Particles.spawnParticle(env.asteroids.boom, self.pos[0] - 90, self.pos[1] - 60, 4)
+                    QSound.play(resource_path("Assets/sfx/crash.wav"))
                     self.health -= 1
                     self.ticksSinceHit = 0
                     self.lastInvincible = time.time()

@@ -1,5 +1,6 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from PyQt5.QtMultimedia import *
 from Utils.Resloader import resource_path
 from Utils import Particles
 import random
@@ -36,6 +37,7 @@ class Asteroids:
             # Destroy asteroid on impact with earth
             if env.getEarth().getSurface().intersects(QRectF(aster)):
                 Particles.spawnParticle(self.boom, aster.x(), aster.y() + 20)
+                QSound.play(resource_path("Assets/sfx/small_crash.wav"))
                 Asteroids.asteroids.remove([aster, speed])
 
             # Spawn Trail
