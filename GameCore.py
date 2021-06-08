@@ -39,8 +39,12 @@ class GameCore(QWidget):
         self.scoreLabel.setFont(font)
         self.scoreLabel.setAlignment(Qt.AlignCenter)
 
-        #Sound Testing Stuff
-        # self.sfxBoom = QSound(resource_path("Assets/sfx/crash.wav"))
+        # Music
+        self.musicInGame = QSound(resource_path("Assets/sfx/ingame.wav"))
+        self.musicInGame.setLoops(QSound.Infinite)
+        self.musicOutGame = QSound(resource_path("Assets/sfx/outgame.wav"))
+        self.musicOutGame.setLoops(QSound.Infinite)
+        self.musicOutGame.play()
 
         # Tick Regulation Stuff
         self.gameRunning = False
@@ -60,11 +64,15 @@ class GameCore(QWidget):
     def startGame(self):
         self.show()
         self.score = 0
+        self.musicOutGame.stop()
+        self.musicInGame.play()
         self.gameRunning = True
 
     def endGame(self):
         self.hide()
         self.lastScore = self.score
+        self.musicOutGame.play()
+        self.musicInGame.stop()
         self.parent.loadingUptext.setText(f"<font color=\"red\"> Last Score: {self.lastScore}")
         self.gameRunning = False
 
