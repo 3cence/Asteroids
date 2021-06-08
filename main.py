@@ -16,8 +16,10 @@ class Window(QMainWindow):
         # Somehow, all this is for the loading text
         self.loadingText = QLabel(self)
         self.loadingSubtext = QLabel(self)
+        self.loadingUptext = QLabel(self)
         self.loadingText.setGeometry(QRect(0, 225, 960, 125))
         self.loadingSubtext.setGeometry(QRect(0, 310, 960, 125))
+        self.loadingUptext.setGeometry(QRect(0, 175, 960, 125))
         loadingFont = QFont()
         loadingFont.setFamily(u"Yrsa")
         loadingFont.setPointSize(80)
@@ -29,6 +31,8 @@ class Window(QMainWindow):
         loadingFont.setPointSize(35)
         self.loadingSubtext.setFont(loadingFont)
         self.loadingSubtext.setAlignment(Qt.AlignCenter)
+        self.loadingUptext.setFont(loadingFont)
+        self.loadingUptext.setAlignment(Qt.AlignCenter)
 
         # Start the games engines
         self.gameCore = GameCore(self)
@@ -44,6 +48,7 @@ class Window(QMainWindow):
         self.gameCore.resetGame()
         self.loadingText.setText("<font color=\"green\"> Restarting Game...")
         self.loadingSubtext.setText("<font color=\"grey\"> Gimmie a Minute")
+        self.loadingUptext.setText(f"<font color=\"green\"> Last Score: {self.gameCore.lastScore}")
         self.startTimer.start()
 
 

@@ -10,22 +10,35 @@ import time
 
 
 class GameCore(QWidget):
-    def __init__(self, mainWindow):
-        super().__init__(mainWindow)
-        self.mainWindow = mainWindow
-        self.setGeometry(mainWindow.geometry())
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.parent = parent
+        self.setGeometry(parent.geometry())
         self.setEnabled(False)
         self.hide()
 
-        #Asset Loading
+        # Asset Loading
         self.background = QPixmap(resource_path("Assets/bg.png"))
 
-        #Game Items
+        # Game Items
         self.player = Player()
         self.earth = Earth()
         self.asteroids = Asteroids(self)
 
-        #Tick Regulation Stuff
+        # Score
+        self.score = 0
+        self.lastScore = 0
+        self.scoreLabel = QLabel(f"<font color=\"white\">Score: {self.score}", self)
+        self.scoreLabel.setGeometry(800, 0, 160, 50)
+        self.scoreLabel.setStyleSheet("background-color: #1c111a")
+        font = QFont()
+        font.setPointSize(20)
+        font.setWeight(30)
+        font.setFamily("tlwg typist")
+        self.scoreLabel.setFont(font)
+        self.scoreLabel.setAlignment(Qt.AlignCenter)
+
+        # Tick Regulation Stuff
         self.gameRunning = False
         self.ticker = QTimer(self)
         self.ticker.setInterval(0)
@@ -42,10 +55,13 @@ class GameCore(QWidget):
 
     def startGame(self):
         self.show()
+        self.score = 0
         self.gameRunning = True
 
     def endGame(self):
         self.hide()
+        self.lastScore = self.score
+        self.parent.loadingUptext.setText(f"<font color=\"red\"> Last Score: {self.lastScore}")
         self.gameRunning = False
 
     def resetGame(self):
@@ -61,13 +77,14 @@ class GameCore(QWidget):
         pnt = QPainter(self)
         pnt.drawPixmap(QRect(0, 0, self.geometry().width(), self.geometry().height()), self.background)
         Particles.renderParticles(pnt)
+        self.scoreLabel.setText(f"<font color=\"white\">Score: {self.score}")
         self.earth.render(pnt)
         self.player.render(pnt)
         self.asteroids.render(pnt)
 
     def tick(self):
 
-        #Put all game-related ticking in this if
+        # Put all game-related ticking in this if
         if self.gameRunning:
             self.player.tick(self)
             self.asteroids.tick(self)
@@ -75,7 +92,7 @@ class GameCore(QWidget):
 
             self.repaint()
 
-        #Tick Regulation
+        # Tick Regulation
         self.Tps += 1.00
         self.secTps += 1
         time.sleep(self.delay / 1000)
@@ -87,7 +104,8 @@ class GameCore(QWidget):
             self.prvTime = time.time()
 
         if time.time() - self.prvSecondTime >= 1:
-            self.mainWindow.setWindowTitle(f"Asteroids: {self.secTps} Tps")
+            self.score += 1
+            self.parent.setWindowTitle(f"Asteroids: {self.secTps} Tps")
             self.secTps = 0
             self.prvSecondTime = time.time()
 
