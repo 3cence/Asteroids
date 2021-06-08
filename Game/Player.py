@@ -21,6 +21,9 @@ class Player(QRect):
         self.onIFrames = False
         self.ticksSinceHit = 0
 
+        # Sfx
+        self.sfxHit = resource_path("Assets/sfx/crash.wav")
+
         #Load Assets
         self.activeTexture = 0
         self.texture = [QPixmap(resource_path("Assets/player/player1.png")),
@@ -72,7 +75,7 @@ class Player(QRect):
                     if self.activeTexture < 2:
                         self.activeTexture += 1
                     Particles.spawnParticle(env.asteroids.boom, self.pos[0] - 90, self.pos[1] - 60, 4)
-                    QSound.play(resource_path("Assets/sfx/crash.wav"))
+                    QSound.play(self.sfxHit)
                     self.health -= 1
                     self.ticksSinceHit = 0
                     self.lastInvincible = time.time()

@@ -20,6 +20,9 @@ class Asteroids:
         for i in range(len(Asteroids.asteroids)):
             Asteroids.asteroids.pop(0)
 
+        # Sfx
+        self.sfxImpact = resource_path("Assets/sfx/small_crash.wav")
+
         # Particles
         self.boom = Particles.Particle("Assets/spritesheets/explosion.png", columns=4, rows=4,
                                        totalFrames=16, fps=50)
@@ -37,7 +40,7 @@ class Asteroids:
             # Destroy asteroid on impact with earth
             if env.getEarth().getSurface().intersects(QRectF(aster)):
                 Particles.spawnParticle(self.boom, aster.x(), aster.y() + 20)
-                QSound.play(resource_path("Assets/sfx/small_crash.wav"))
+                QSound.play(self.sfxImpact)
                 Asteroids.asteroids.remove([aster, speed])
 
             # Spawn Trail
