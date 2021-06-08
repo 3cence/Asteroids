@@ -1,7 +1,9 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from QtOverrides import *
 from GameCore import GameCore
+from Game.LoadingScreen import LoadingScreen
 from Utils.Resloader import resource_path
 import sys
 
@@ -34,12 +36,16 @@ class Window(QMainWindow):
         self.loadingUptext.setFont(loadingFont)
         self.loadingUptext.setAlignment(Qt.AlignCenter)
 
+        #Starting Screen
+        self.loadingScreen = LoadingScreen(self)
+
         # Start the games engines
         self.gameCore = GameCore(self)
         self.startTimer = QTimer(self)
         self.startTimer.setInterval(2250)
         self.startTimer.timeout.connect(self.startGame)
-        self.startTimer.start()
+
+        # self.startTimer.start()
         self.loadingText.setText("<font color=\"green\"> Loading Game...")
         self.loadingSubtext.setText("<font color=\"grey\"> Gimmie a Minute")
 

@@ -4,7 +4,7 @@ import random, copy
 
 
 class ParticleSpritesheet:
-    def __init__(self, path: str, columns: int, rows: int, totalFrames: int, fps: int, loops=False):
+    def __init__(self, path: str, columns: int, rows: int, totalFrames: int, fps=1, loops=False):
         super().__init__()
         self.full_pixmap = QPixmap(path)
         self.pos = [0, 0]
