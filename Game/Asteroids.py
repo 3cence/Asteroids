@@ -28,10 +28,8 @@ class Asteroids:
     def tick(self, env):
         # Spawn new asteroid
         if int((random.random() * 1000) % 10) == 0:
-            speed = (random.random() * 1000) % 15
-            if speed < 5:
-                speed = 10
-            Asteroids.asteroids.append([QRect((random.random() * 1000) % 914, self.height * -1, self.width, self.height),
+            speed = ((random.random() * 1000) % 10) + 6
+            Asteroids.asteroids.append([QRect(int(random.random() * 1000) % 914, self.height * -1, self.width, self.height),
                                        speed])
 
         for aster, speed in Asteroids.asteroids:
