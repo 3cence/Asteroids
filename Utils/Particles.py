@@ -1,13 +1,12 @@
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from Utils.Resloader import resource_path
 import random, copy
 
 
 class ParticleSpritesheet:
     def __init__(self, path: str, columns: int, rows: int, totalFrames: int, fps: int, loops=False):
         super().__init__()
-        self.full_pixmap = QPixmap((resource_path(path)))
+        self.full_pixmap = QPixmap(path)
         self.pos = [0, 0]
         self.gridSize = [columns, rows]
         self.totalFrames = totalFrames
