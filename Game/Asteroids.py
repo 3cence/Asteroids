@@ -24,10 +24,10 @@ class Asteroids:
         self.sfxImpact = resource_path("Assets/sfx/small_crash.wav")
 
         # Particles
-        self.boom = Particles.Particle("Assets/spritesheets/explosion.png", columns=4, rows=4,
-                                       totalFrames=16, fps=50)
-        self.trail = Particles.Particle("Assets/spritesheets/trailing_fire.png", columns=3, rows=3,
-                                        totalFrames=8, fps=20)
+        self.boom = Particles.ParticleSpritesheet("Assets/spritesheets/explosion.png", columns=4, rows=4,
+                                                  totalFrames=16, fps=50)
+        self.trail = Particles.ParticleSpritesheet("Assets/spritesheets/trailing_fire.png", columns=3, rows=3,
+                                                   totalFrames=8, fps=20)
 
     def tick(self, env):
         # Spawn new asteroid

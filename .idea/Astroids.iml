@@ -7,6 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/dist" />
       <excludeFolder url="file://$MODULE_DIR$/Flowcharts" />
       <excludeFolder url="file://$MODULE_DIR$/Maker Saves" />
+      <excludeFolder url="file://$MODULE_DIR$/Documents" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.8 (Asteroids)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

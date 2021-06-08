@@ -4,7 +4,7 @@ from Utils.Resloader import resource_path
 import random, copy
 
 
-class Particle:
+class ParticleSpritesheet:
     def __init__(self, path: str, columns: int, rows: int, totalFrames: int, fps: int, loops=False):
         super().__init__()
         self.full_pixmap = QPixmap((resource_path(path)))
@@ -34,7 +34,7 @@ class Particle:
 activeAnimations = []
 
 
-def spawnParticle(particle: Particle, x: int, y: int, scale=1.00):
+def spawnParticle(particle: ParticleSpritesheet, x: int, y: int, scale=1.00):
     newParticle = copy.copy(particle)
     newParticle.id = random.random()
     newParticle.pos = [x, y]
