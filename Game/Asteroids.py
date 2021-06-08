@@ -16,6 +16,9 @@ class Asteroids:
         self.height = 70
         self.speed = 5
 
+        for i in range(len(Asteroids.asteroids)):
+            Asteroids.asteroids.pop(0)
+
         # Particles
         self.boom = Particles.Particle("Assets/spritesheets/explosion.png", columns=4, rows=4,
                                        totalFrames=16, fps=50)

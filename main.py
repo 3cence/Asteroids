@@ -37,7 +37,7 @@ class Window(QMainWindow):
 
 
     def restartGame(self):
-        self.gameCore.reset()
+        self.gameCore.resetGame()
         self.loadingText.setText("<font color=\"white\"> Loading Game...")
         self.startTimer.start()
 

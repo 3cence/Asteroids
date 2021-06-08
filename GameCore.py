@@ -48,6 +48,14 @@ class GameCore(QWidget):
         self.hide()
         self.gameRunning = False
 
+    def resetGame(self):
+        self.gameRunning = False
+
+        for i in range(len(Particles.activeAnimations)):
+            Particles.activeAnimations.pop(0)
+
+        self.player = Player()
+        self.asteroids = Asteroids(self)
 
     def paintEvent(self, event):
         pnt = QPainter(self)

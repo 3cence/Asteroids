@@ -1,5 +1,6 @@
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from Utils import Particles
 import time
 
 from Utils.Resloader import resource_path
@@ -27,7 +28,7 @@ class Player(QRect):
         self.heart = QPixmap(resource_path("Assets/player/heart.png"))
 
     def render(self, pnt: QPainter):
-        if self.ticksSinceHit % 2 == 0:
+        if self.ticksSinceHit % 2 == 0 and self.health != 0:
             pnt.drawPixmap(self, self.texture[self.activeTexture])
 
         for i in range(self.health):
@@ -70,6 +71,7 @@ class Player(QRect):
                 if self.intersects(asteroid):
                     if self.activeTexture < 2:
                         self.activeTexture += 1
+                    Particles.spawnParticle(env.asteroids.boom, self.pos[0] - 90, self.pos[1] - 60, 4)
                     self.health -= 1
                     self.ticksSinceHit = 0
                     self.lastInvincible = time.time()
@@ -77,7 +79,7 @@ class Player(QRect):
             self.ticksSinceHit += 1
 
         #DID YOU DIE BOX
-        if self.health == 0:
+        if self.health == 0 and self.ticksSinceHit == 30:
             env.endGame()
 
 
