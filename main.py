@@ -15,7 +15,9 @@ class Window(QMainWindow):
 
         # Somehow, all this is for the loading text
         self.loadingText = QLabel(self)
-        self.loadingText.setGeometry(QRect(137, 225, 685, 125))
+        self.loadingSubtext = QLabel(self)
+        self.loadingText.setGeometry(QRect(0, 225, 960, 125))
+        self.loadingSubtext.setGeometry(QRect(0, 310, 960, 125))
         loadingFont = QFont()
         loadingFont.setFamily(u"Yrsa")
         loadingFont.setPointSize(80)
@@ -24,8 +26,9 @@ class Window(QMainWindow):
         loadingFont.setWeight(75)
         self.loadingText.setFont(loadingFont)
         self.loadingText.setAlignment(Qt.AlignCenter)
-        self.gameCore = None
-        self.startTimer = None
+        loadingFont.setPointSize(35)
+        self.loadingSubtext.setFont(loadingFont)
+        self.loadingSubtext.setAlignment(Qt.AlignCenter)
 
         # Start the games engines
         self.gameCore = GameCore(self)
@@ -33,19 +36,22 @@ class Window(QMainWindow):
         self.startTimer.setInterval(2250)
         self.startTimer.timeout.connect(self.startGame)
         self.startTimer.start()
-        self.loadingText.setText("<font color=\"white\"> Loading Game...")
+        self.loadingText.setText("<font color=\"green\"> Loading Game...")
+        self.loadingSubtext.setText("<font color=\"grey\"> Gimmie a Minute")
 
 
     def restartGame(self):
         self.gameCore.resetGame()
-        self.loadingText.setText("<font color=\"white\"> Loading Game...")
+        self.loadingText.setText("<font color=\"green\"> Restarting Game...")
+        self.loadingSubtext.setText("<font color=\"grey\"> Gimmie a Minute")
         self.startTimer.start()
 
 
     def startGame(self):
         self.gameCore.startGame()
         self.startTimer.stop()
-        self.loadingText.setText("<font color=\"red\"> Game Over...")
+        self.loadingText.setText("<font color=\"red\"> Game Over")
+        self.loadingSubtext.setText("<font color=\"red\"> Press R to Restart")
 
     def paintEvent(self, event):
         pnt = QPainter(self)
