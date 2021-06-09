@@ -1,6 +1,3 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
 from QtOverrides.PaintBtn import *
 from Utils.Resloader import resource_path
 
@@ -11,6 +8,7 @@ class LoadingScreen(QWidget):
         self.parent = parent
         self.setGeometry(parent.geometry())
 
+        #Set up button
         self.startBtn = PaintBtn(resource_path("Assets/play.png"), 4, self)
         self.startBtn.setGeometry(int((parent.width() / 2) - (self.startBtn.width() / 2)), 325,
                                   self.startBtn.width(), self.startBtn.height())
