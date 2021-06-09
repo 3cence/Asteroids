@@ -14,6 +14,7 @@ class LoadingScreen(QWidget):
         self.startBtn = PaintBtn(resource_path("Assets/play.png"), 4, self)
         self.startBtn.setGeometry(int((parent.width() / 2) - (self.startBtn.width() / 2)), 325,
                                   self.startBtn.width(), self.startBtn.height())
+        self.startBtn.setShortcut("Space")
 
         #Load Stuff
         self.title = QPixmap(resource_path("Assets/title.png"))
