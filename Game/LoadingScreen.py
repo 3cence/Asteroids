@@ -9,10 +9,11 @@ class LoadingScreen(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        print("Loading the start screen")
         self.setGeometry(parent.geometry())
 
-        self.startBtn = PaintBtn(resource_path("Assets/play.png"), 1, 3, 3, self)
+        self.startBtn = PaintBtn(resource_path("Assets/play.png"), 4, self)
+        self.startBtn.setGeometry(int((parent.width() / 2) - (self.startBtn.width() / 2)), 325,
+                                  self.startBtn.width(), self.startBtn.height())
 
         #Load Stuff
         self.title = QPixmap(resource_path("Assets/title.png"))
@@ -21,4 +22,4 @@ class LoadingScreen(QWidget):
         pnt = QPainter(self)
         pnt.setBrush(Qt.blue)
         pnt.drawPixmap(self.geometry(), self.parent.gameCore.background)
-        pnt.drawPixmap(QRect(20, 0, self.title.width(), self.title.height()), self.title)
+        pnt.drawPixmap(QRect(20, 50, self.title.width(), self.title.height()), self.title)

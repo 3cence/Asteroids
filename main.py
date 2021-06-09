@@ -35,8 +35,9 @@ class Window(QMainWindow):
         self.loadingUptext.setFont(loadingFont)
         self.loadingUptext.setAlignment(Qt.AlignCenter)
 
-        #Starting Screen
+        # Starting Screen
         self.loadingScreen = LoadingScreen(self)
+        self.loadingScreen.startBtn.clicked.connect(self.startBtnPressed)
 
         # Start the games engines
         self.gameCore = GameCore(self)
@@ -56,7 +57,6 @@ class Window(QMainWindow):
         self.loadingUptext.setText(f"<font color=\"green\"> Last Score: {self.gameCore.lastScore}")
         self.startTimer.start()
 
-
     def startGame(self):
         self.gameCore.startGame()
         self.startTimer.stop()
@@ -67,6 +67,11 @@ class Window(QMainWindow):
         pnt = QPainter(self)
         pnt.drawPixmap(QRect(0, 0, self.gameCore.geometry().width(), self.gameCore.geometry().height()),
                        self.gameCore.background)
+
+    def startBtnPressed(self):
+        self.loadingScreen.hide()
+        self.loadingScreen.setEnabled(False)
+        self.startTimer.start()
 
     def keyPressEvent(self, event: QKeyEvent):
         self.gameCore.keyEventDist(event, True)
