@@ -12,7 +12,7 @@ class LoadingScreen(QWidget):
         print("Loading the start screen")
         self.setGeometry(parent.geometry())
 
-        self.startBtn = PaintBtn(resource_path("Assets/play.png"), self)
+        self.startBtn = PaintBtn(resource_path("Assets/play.png"), 1, 3, 3, self)
 
         #Load Stuff
         self.title = QPixmap(resource_path("Assets/title.png"))

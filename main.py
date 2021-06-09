@@ -1,7 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from QtOverrides import *
 from GameCore import GameCore
 from Game.LoadingScreen import LoadingScreen
 from Utils.Resloader import resource_path
