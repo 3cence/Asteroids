@@ -20,7 +20,7 @@ class Window(QMainWindow):
         self.loadingUptext = QLabel(self)
         self.loadingText.setGeometry(QRect(0, 225, 960, 125))
         self.loadingSubtext.setGeometry(QRect(0, 310, 960, 125))
-        self.loadingUptext.setGeometry(QRect(0, 175, 960, 125))
+        self.loadingUptext.setGeometry(QRect(0, 170, 960, 125))
         loadingFont = QFont()
         loadingFont.setFamily(u"Yrsa")
         loadingFont.setPointSize(80)
@@ -52,15 +52,14 @@ class Window(QMainWindow):
 
     def restartGame(self):
         self.gameCore.resetGame()
+        self.loadingUptext.setText(f"<font color=\"green\"> High Score: {self.gameCore.highScore}")
         self.loadingText.setText("<font color=\"green\"> Restarting Game...")
         self.loadingSubtext.setText("<font color=\"grey\"> Gimmie a Minute")
-        self.loadingUptext.setText(f"<font color=\"green\"> Last Score: {self.gameCore.lastScore}")
         self.startTimer.start()
 
     def startGame(self):
         self.gameCore.startGame()
         self.startTimer.stop()
-        self.loadingText.setText("<font color=\"red\"> Game Over")
         self.loadingSubtext.setText("<font color=\"red\"> Press R to Restart")
 
     def paintEvent(self, event):

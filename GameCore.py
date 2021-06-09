@@ -28,7 +28,7 @@ class GameCore(QWidget):
 
         # Score
         self.score = 0
-        self.lastScore = 0
+        self.highScore = 0
         self.scoreLabel = QLabel(f"<font color=\"white\">Score: {self.score}", self)
         self.scoreLabel.setGeometry(800, 0, 160, 50)
         self.scoreLabel.setStyleSheet("background-color: #1c111a")
@@ -70,10 +70,15 @@ class GameCore(QWidget):
 
     def endGame(self):
         self.hide()
-        self.lastScore = self.score
+        color = "red"
+        self.parent.loadingText.setText("<font color=\"red\"> Game Over")
+        if self.highScore < self.score:
+            self.highScore = self.score
+            self.parent.loadingText.setText("<font color=\"green\"> New High Score!")
+            color = "green"
         self.musicOutGame.play()
         self.musicInGame.stop()
-        self.parent.loadingUptext.setText(f"<font color=\"red\"> Last Score: {self.lastScore}")
+        self.parent.loadingUptext.setText(f"<font color=\"{color}\"> Score: {self.score} | High Score: {self.highScore}")
         self.gameRunning = False
 
     def resetGame(self):
