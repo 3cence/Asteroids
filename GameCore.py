@@ -64,12 +64,14 @@ class GameCore(QWidget):
     def startGame(self):
         self.show()
         self.score = 0
+        QApplication.setOverrideCursor(Qt.BlankCursor)
         self.musicOutGame.stop()
         self.musicInGame.play()
         self.gameRunning = True
 
     def endGame(self):
         self.hide()
+        QApplication.setOverrideCursor(Qt.ArrowCursor)
         color = "red"
         self.parent.loadingText.setText("<font color=\"red\"> Game Over")
         if self.highScore < self.score:
