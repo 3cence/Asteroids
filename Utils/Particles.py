@@ -26,7 +26,7 @@ class ParticleSpritesheet:
         for y in range(self.gridSize[1]):
             for x in range(self.gridSize[0]):
                 if framesLoaded < self.totalFrames:
-                    self.frames.append(self.full_pixmap.copy(QRect(self.jumpX * x, self.jumpY * y, self.jumpX - 1, self.jumpY - 1)))
+                    self.frames.append(self.full_pixmap.copy(QRect(self.jumpX * x, self.jumpY * y, self.jumpX, self.jumpY)))
                     framesLoaded += 1
 
 
